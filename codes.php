@@ -3,80 +3,15 @@
 	$query = "SELECT * FROM `code` WHERE 1";
 	$result = mysqli_query($link, $query);
 
-	function printQ($row) {
-		$question = '<div class="row">
-			<h6><strong>Problem Statement</strong></h5>
-		</div>
-		<div class="row">
-			<p>'.$row['problem'].'</p>
-		</div>';
-		if (!(ctype_space($row['samplei'])) && !($row['samplei'] == '')) {
-			$question .= '<div class="row">
-				<h6><strong>Sample Input</strong></h5>
-			</div>
-			<div class="row">
-				<p>'.$row['samplei'].'</p>
-			</div>';
-		}
-		if (!ctype_space($row['sampleo']) && !($row['sampleo'] == '')) {
-			$question .= '<div class="row">
-				<h6><strong>Sample Output</strong></h5>
-			</div>
-			<div class="row">
-				<p>'.$row['sampleo'].'</p>
-			</div>';
-		}
-		if (!ctype_space($row['explanation']) && !($row['explanation'] == '')) {
-			$question .= '<div class="row">
-				<h6><strong>Explanation</strong></h5>
-			</div>
-			<div class="row">
-				<p>'.$row['explanation'].'</p>
-			</div>';
-		}
-		if (!ctype_space($row['code']) && !($row['code'] == '')) {
-			$question .= '<div class="row">
-				<h6><strong>Code</strong></h5>
-			</div>
-			<div class="row">
-				<p><pre><code>'.$row['code'].'</code></pre></p>
-			</div>';
-		}
-		if (!ctype_space($row['other']) && !($row['other'] == '')) {
-			$question .= '<div class="row">
-				<h6><strong>Other</strong></h5>
-			</div>
-			<div class="row">
-				<p>'.$row['other'].'</p>
-			</div>';
-		}
-		return $question;
-	}
-
 	function printCard($row) {
-		echo '<div class="card">';
-		echo '<div class="card-header" role="tab" id="h'.$row['id'].'">
-			<h5 class="mb-0">
-				<div class="row">
-					<div class="col-6">
-						<a data-toggle="collapse" href="#c'.$row['id'].'" role="button" aria-expanded="true" aria-controls="c'.$row['id'].'">'.$row['title'].'</a>
-					</div>
-					<div class="col">
-						'.$row['domain'].'
-					</div>
-					<div class="col text-muted">
-						'.$row['history'].'
-					</div>
-				</div>
-			</h5>
-		</div>';
-		  
-		echo '<div id="c'.$row['id'].'" class="collapse" role="tabpanel" aria-labelledby="h'.$row['id'].'" data-parent="#accordian">
-			<div class="card-body">
-				'.printQ($row).'
+		echo '<a href="code.php?q='.$row['id'].'" class="list-group-item list-group-item-action flex-column align-items-start">
+			<div class="d-flex w-100 justify-content-between">
+		  		<h5 class="mb-1">'.$row['title'].'</h5>
+		  		<small>'.$row['date'].'</small>
 			</div>
-		  </div>';
-		echo '</div>';
+			<p class="mb-1">'.$row['domain'].'</p>
+			<small>'.$row['history'].'</small>
+	  	</a>';
 	}
 ?>
 <!DOCTYPE html>
@@ -96,7 +31,7 @@
   	</head>
   	<body>
 		<div class="container" >
-			<div id="accordian" role="tablist" >
+			<div id="list-group">
 					<?php
 						while($row = $result->fetch_assoc()) {
 							printCard($row);
