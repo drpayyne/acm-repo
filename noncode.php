@@ -1,27 +1,41 @@
-<?php 
+<?php
 	require 'config.php';
-	$query = "SELECT * FROM `reference` WHERE 1";
+
+	$id = $_GET['q'];
+
+	$query = "SELECT * FROM `noncode` WHERE id=$id";
 	$result = mysqli_query($link, $query);
+	$row = $result->fetch_assoc();
 
-	function printTextCard($row) {
-		echo '<li class="list-group-item flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between align-items-center">
-				<p class="mb-1">'.$row['text'].'</p>
-				<small>'.$row['date'].'</small>
+	function printQ($row) {
+		$question = '<div class="row">
+			<h3><strong>'.$row['title'].'</strong></h3>
+		</div><br>';
+		$question .= '<div class="row">
+			<h6><strong>Question</strong></h5>
+		</div>
+		<div class="row">
+			<p>'.$row['question'].'</p>
+		</div>';
+		if (!(ctype_space($row['answer'])) && !($row['answer'] == '')) {
+			$question .= '<div class="row">
+				<h6><strong>Answer</strong></h5>
 			</div>
-			<p class="mb-1">'.$row['domain'].'</p>
-		</a>';
+			<div class="row">
+				<p>'.$row['answer'].'</p>
+			</div>';
+		}
+		if (!ctype_space($row['other']) && !($row['other'] == '')) {
+			$question .= '<div class="row">
+				<h6><strong>Other</strong></h5>
+			</div>
+			<div class="row">
+				<p>'.$row['other'].'</p>
+			</div>';
+		}
+		echo $question;
 	}
 
-	function printLinkCard($row) {
-		echo '<a href="reference.php?file='.$row['id'].'" class="list-group-item list-group-item-action flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">'.$row['text'].'</h5>
-				<small>'.$row['date'].'</small>
-			</div>
-			<p class="mb-1">'.$row['domain'].'</p>
-		</a>';
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,17 +54,9 @@
   	</head>
   	<body>
 		<div class="container" >
-			<div id="list-group">
-					<?php
-						while($row = $result->fetch_assoc()) {
-							if($row['type'] == 'file') {
-								printLinkCard($row);
-							} else if($row['type'] == 'text') {
-								printTextCard($row);
-							}
-						}
-					?>
-			</div>
+			<?php
+				printQ($row);
+			?>
 		</div>
   	</body>
 </html>

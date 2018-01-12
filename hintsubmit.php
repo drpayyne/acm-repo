@@ -6,7 +6,7 @@
 		die(header('Location: index.html'));
 	}
 	
-	if(empty($_POST['title'])) {
+	if(empty($_POST['text'])) {
 		die(header('Location: index.html'));
 	}
 
@@ -27,7 +27,7 @@
 	if(!mysqli_query($link, $query)){
 		die(mysqli_error($link));
 	} else {
-		header('Location: index.html');
+		header('Location: hints.php');
 	}
 
 	mysqli_close($link);

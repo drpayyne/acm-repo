@@ -34,7 +34,7 @@
 	if(!mysqli_query($link, $query)){
 		die(mysqli_error($link));
 	} else {
-		header('Location: index.html');
+		header('Location: codes.php');
 	}
 
 	mysqli_close($link);

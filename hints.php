@@ -1,12 +1,12 @@
 <?php 
 	require 'config.php';
-	$query = "SELECT * FROM `code` WHERE 1";
+	$query = "SELECT * FROM `hint` WHERE 1";
 	$result = mysqli_query($link, $query);
 
 	function printCard($row) {
-		echo '<a href="#" class="list-group-item flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between">
-		  		<h5 class="mb-1">'.$row['text'].'</h5>
+		echo '<li class="list-group-item flex-column align-items-start">
+			<div class="d-flex w-100 justify-content-between align-items-center">
+		  		<p class="mb-1">'.$row['text'].'</p>
 		  		<small>'.$row['date'].'</small>
 			</div>
 			<p class="mb-1">'.$row['author'].'</p>
@@ -31,13 +31,13 @@
   	</head>
   	<body>
 		<div class="container" >
-			<div id="list-group">
+			<ul class="list-group">
 					<?php
 						while($row = $result->fetch_assoc()) {
 							printCard($row);
 						}
 					?>
-			</div>
+			</ul>
 		</div>
   	</body>
 </html>

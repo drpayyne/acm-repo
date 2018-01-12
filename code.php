@@ -9,6 +9,9 @@
 
 	function printQ($row) {
 		$question = '<div class="row">
+			<h3><strong>'.$row['title'].'</strong></h3>
+		</div><br>';
+		$question .= '<div class="row">
 			<h6><strong>Problem Statement</strong></h5>
 		</div>
 		<div class="row">
